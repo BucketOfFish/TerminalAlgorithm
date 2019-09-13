@@ -2,7 +2,7 @@ import gamelib
 import random
 import warnings  # NOQA
 from sys import maxsize  # NOQA
-import my_functions as F
+import my_game_state
 
 
 class AlgoStrategy(gamelib.AlgoCore):
@@ -41,6 +41,13 @@ class AlgoStrategy(gamelib.AlgoCore):
         EMP = config["unitInformation"][4]["shorthand"]
         SCRAMBLER = config["unitInformation"][5]["shorthand"]
 
+    def _test_functions(self, game_state):
+        # locations = game_state._get_all_map_locations()
+        # gamelib.debug_write(locations)
+        # my_defenders, enemy_defenders = game_state.get_all_defenders()
+        # gamelib.debug_write(my_defenders, enemy_defenders)
+        pass
+
     def on_turn(self, turn_state):
         """
         This function is called every turn with the game state wrapper as
@@ -49,9 +56,8 @@ class AlgoStrategy(gamelib.AlgoCore):
         unit deployments, and transmitting your intended deployments to the
         game engine.
         """
-        game_state = gamelib.GameState(self.config, turn_state)
-        locations = F._get_all_map_locations(game_state)
-        print(locations)
+        game_state = my_game_state.MyGameState(self.config, turn_state)
+        self._test_functions(game_state)
         gamelib.debug_write('Performing turn {} of your custom algo strategy'.format(game_state.turn_number))
         # game_state.suppress_warnings(True)
         self.strategy(game_state)
