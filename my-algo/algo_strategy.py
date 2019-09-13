@@ -45,9 +45,10 @@ class AlgoStrategy(gamelib.AlgoCore):
         # gamelib.debug_write(locations)
         # my_defenders, enemy_defenders = game_state.get_all_defenders()
         # gamelib.debug_write(my_defenders, enemy_defenders)
-        ratings = game_state.rate_attack_positions(1)
-        for rating in ratings:
-            gamelib.debug_write(rating)
+        ratings = game_state.rate_attack_positions(0)
+        # for rating in ratings:
+            # gamelib.debug_write(rating)
+        gamelib.debug_write(ratings)
         # game_state.find_path_to_edge([10, 3], game_state.game_map.TOP_LEFT)
         pass
 

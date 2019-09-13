@@ -1,3 +1,4 @@
+import gamelib  # NOQA
 from .advanced_game_state import AdvancedGameState
 
 
@@ -30,22 +31,21 @@ class MyGameState(AdvancedGameState):
 
     def rate_attack_positions(self, player):
         '''For each attack position, return a list of how many defenders are in range at each step.'''
+        def rate(start_edge, end_edge):
+            for location in self.game_map.get_edge_locations(start_edge):
+                if self.contains_stationary_unit(location):
+                    continue
+                path = self.find_path_to_edge(location, end_edge)
+                ratings.append([location, self.find_defenders_along_path(path, player)])
+
         ratings = []
         if player == 0:
-            for location in self.game_map.get_edge_locations(self.game_map.BOTTOM_LEFT):
-                path = self.find_path_to_edge(location, self.game_map.TOP_RIGHT)
-                ratings.append([location, self.find_defenders_along_path(path, 0)])
-            for location in self.game_map.get_edge_locations(self.game_map.BOTTOM_RIGHT):
-                path = self.find_path_to_edge(location, self.game_map.TOP_LEFT)
-                ratings.append([location, self.find_defenders_along_path(path, 0)])
-        elif player == 0:
-            for location in self.game_map.get_edge_locations(self.game_map.TOP_LEFT):
-                path = self.find_path_to_edge(location, self.game_map.BOTTOM_RIGHT)
-                ratings.append([location, self.find_defenders_along_path(path, 1)])
-            for location in self.game_map.get_edge_locations(self.game_map.TOP_RIGHT):
-                path = self.find_path_to_edge(location, self.game_map.BOTTOM_LEFT)
-                ratings.append([location, self.find_defenders_along_path(path, 1)])
-        pass
+            rate(self.game_map.BOTTOM_LEFT, self.game_map.TOP_RIGHT)
+            rate(self.game_map.BOTTOM_RIGHT, self.game_map.TOP_LEFT)
+        elif player == 1:
+            rate(self.game_map.TOP_LEFT, self.game_map.BOTTOM_RIGHT)
+            rate(self.game_map.TOP_RIGHT, self.game_map.BOTTOM_LEFT)
+        return ratings
 
     def get_game_state_with_additional_blockers(self, blockers):
         '''Return the game state we would have if we added blockers at a given list of locations.'''
