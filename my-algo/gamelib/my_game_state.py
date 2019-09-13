@@ -1,7 +1,7 @@
-import gamelib
+from .advanced_game_state import AdvancedGameState
 
 
-class MyGameState(gamelib.AdvancedGameState):
+class MyGameState(AdvancedGameState):
 
     def _get_all_map_locations(self):
         '''Return a list of all legal positions on the map.'''

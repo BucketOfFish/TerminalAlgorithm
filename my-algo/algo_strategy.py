@@ -2,7 +2,6 @@ import gamelib
 import random
 import warnings  # NOQA
 from sys import maxsize  # NOQA
-import my_game_state
 
 
 class AlgoStrategy(gamelib.AlgoCore):
@@ -56,7 +55,7 @@ class AlgoStrategy(gamelib.AlgoCore):
         unit deployments, and transmitting your intended deployments to the
         game engine.
         """
-        game_state = my_game_state.MyGameState(self.config, turn_state)
+        game_state = gamelib.my_game_state.MyGameState(self.config, turn_state)
         self._test_functions(game_state)
         gamelib.debug_write('Performing turn {} of your custom algo strategy'.format(game_state.turn_number))
         # game_state.suppress_warnings(True)
