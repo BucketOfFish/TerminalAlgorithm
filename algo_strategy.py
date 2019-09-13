@@ -2,6 +2,7 @@ import gamelib
 import random
 import warnings  # NOQA
 from sys import maxsize  # NOQA
+import my_functions as F
 
 
 class AlgoStrategy(gamelib.AlgoCore):
@@ -49,6 +50,8 @@ class AlgoStrategy(gamelib.AlgoCore):
         game engine.
         """
         game_state = gamelib.GameState(self.config, turn_state)
+        locations = F._get_all_map_locations(game_state)
+        print(locations)
         gamelib.debug_write('Performing turn {} of your custom algo strategy'.format(game_state.turn_number))
         # game_state.suppress_warnings(True)
         self.strategy(game_state)
